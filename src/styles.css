@@ -63,7 +63,7 @@ header {
     color: white;
     padding: 20px;
     width: 250px;
-    height: 100%;
+    min-height: max-content;
 }
 
 #nav_top, #nav_bottom {
@@ -89,4 +89,30 @@ header {
             color: var(--primary-color);
         }
     }
+}
+
+#navigation button {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* espace entre image et texte */
+}
+
+#navigation button img {
+    width: 20px;
+    height: 20px;
+}
+
+#nav_bottom #projects {
+    
+    text-align: left;
+    background-color: var(--primary-color);
+    color: var(--third-color);
+    border: none;
+    appearance: none;
+    letter-spacing: 3px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    margin-left: -20px;
+    box-sizing: border-box;
+    width: calc(100% + 40px);
 }
