@@ -57,13 +57,9 @@ export function createTask(name, description, dueDate, priority) {
 
 // Display the task details
 export function displayTaskDetails(task) {
-    const taskDetails = task.getTaskDetails();
-    console.log(taskDetails); // CONSOLE 
-    // ADD THE DOM MODIFICATION 
 
     const taskElement = document.createElement("div");
     taskElement.classList.add("task"); 
-    taskElement.textContent = taskDetails;
     taskElement.setAttribute("data-name", task.getTaskName());
     taskElement.setAttribute("data-description", task.getTaskDescription());
     taskElement.setAttribute("data-dueDate", task.getTaskDueDate());
@@ -71,5 +67,66 @@ export function displayTaskDetails(task) {
     taskElement.setAttribute("data-completed", task.getTaskCompleted());
     taskElement.setAttribute("draggable", "true");
 
-    const taskContainer = document.querySelector("#main_bottom");
+        // ========== Left side (checkbox + label)
+        const taskLeft = document.createElement("div");
+        taskLeft.classList.add("task-left");
+    
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.getTaskCompleted() === "true";
+    
+        const label = document.createElement("label");
+        label.textContent = task.getTaskName();
+    
+        taskLeft.appendChild(checkbox);
+        taskLeft.appendChild(label);
+    
+        // ========== Right side (icons)
+        const icons = document.createElement("div");
+        icons.classList.add("task-icons");
+    
+        const iconData = [
+            { class: "edit-date", title: "Edit Date", src: "https://cdn-icons-png.flaticon.com/512/747/747310.png" },
+            { class: "edit-task", title: "Edit Task", src: "https://cdn-icons-png.flaticon.com/512/1827/1827933.png" },
+            { class: "delete-task", title: "Delete Task", src: "https://cdn-icons-png.flaticon.com/512/1214/1214428.png" }
+        ];
+    
+        iconData.forEach(({ class: cls, title, src }) => {
+            const span = document.createElement("span");
+            span.classList.add("task-icon", cls);
+            span.title = title;
+    
+            const img = document.createElement("img");
+            img.src = src;
+            img.width = 16;
+            img.height = 16;
+    
+            span.appendChild(img);
+            icons.appendChild(span);
+        });
+    
+        // ========== Assemble
+        taskElement.appendChild(taskLeft);
+        taskElement.appendChild(icons);
+    
+        const taskContainer = document.querySelector(".taskcontainer");
+        taskContainer.appendChild(taskElement);
+
+}
+
+// Default display : home page - My Day
+
+export function displayMyDay() {
+
+    const taskContainer = document.querySelector(".taskcontainer");
+    taskContainer.innerHTML = ""; // Clear the container before displaying tasks
+
+    const myDayTitle = document.createElement("h2");
+    myDayTitle.textContent = "My Day";
+    taskContainer.appendChild(myDayTitle);
+
+    // Here you would typically fetch and display tasks for "My Day"
+    // For demonstration, we'll just create a sample task
+    const sampleTask = createTask("Sample Task", "This is a sample task", "2023-10-01", "High");
+    displayTaskDetails(sampleTask);
 }

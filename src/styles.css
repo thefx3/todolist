@@ -121,7 +121,7 @@ header {
 /* //Main content */
 
 #main {
-    padding:50px;
+    padding:30px;
     width: 100%;
 }
 
@@ -144,7 +144,7 @@ header {
     border-radius: 5px;
 }
 
-radio {
+.task-left {
     display: flex;
     gap: 15px;
     align-items: center;
