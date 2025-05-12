@@ -248,3 +248,9 @@ background-color: var(--thirdary-color);
 color: var(--forth-color);
 }
   
+.task[data-completed="true"] {
+    text-decoration: line-through;
+    color: var(--thirdary-color);
+    background-color: var(--forth-color);
+}
+

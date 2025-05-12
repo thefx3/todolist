@@ -1,8 +1,9 @@
 //task.js
-
+import { allTasks } from "./index.js";
 
 // Create the logic of the task
 export function createTask(name, description, dueDate, priority) {
+    const id = Date.now()+ Math.random();
     let _name = name;
     let _description = description;
     let _dueDate = dueDate;
@@ -11,6 +12,9 @@ export function createTask(name, description, dueDate, priority) {
   
     return {
       // === Getters
+      get id() {
+        return id;
+      },
       get name() {
         return _name.trim();
       },
@@ -79,7 +83,13 @@ export function displayTaskDetails(task) {
     
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        checkbox.checked = task.completed === "true";
+        checkbox.checked = task.completed;
+
+        checkbox.addEventListener("change", () => {
+            task.toggleCompleted();
+            taskElement.setAttribute("data-completed", task.completed);
+            checkbox.checked = task.completed;
+        });
     
         const label = document.createElement("label");
         label.textContent = task.name;
@@ -108,6 +118,14 @@ export function displayTaskDetails(task) {
             img.height = 16;
     
             span.appendChild(img);
+
+            if (cls === "delete-task") {
+              span.addEventListener("click", () => {
+                // Appel de la fonction de suppression
+                deleteTask(task);
+              });
+            }
+
             icons.appendChild(span);
         });
     
@@ -119,7 +137,16 @@ export function displayTaskDetails(task) {
         taskContainer.appendChild(taskElement);
 }
 
+export function deleteTask(task) {
+  import("./index.js").then(({ allTasks }) => {
+    const index = allTasks.findIndex(t => t.id === task.id);
+    if (index !== -1) {
+      allTasks.splice(index, 1);
+    }
 
-export function SetDueDate(task){
-  
+    const taskElement = document.querySelector(`.task[data-name="${task.name}"]`);
+    if (taskElement) {
+      taskElement.remove();
+    }
+  });
 }

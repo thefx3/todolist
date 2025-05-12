@@ -60,14 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
       addBtn.classList.add("add-task-button");
       addBtn.textContent = "Add";
       addBtn.style.padding = "6px";
+
       addBtn.addEventListener("click", () => {
         const taskText = input.value.trim();
         if (taskText !== "") {
           const task = createTask(taskText, "", new Date().toISOString(), "Low");
+          allTasks.push(task);
           displayTaskDetails(task);
           container.remove();
           addTaskDiv.style.display = "flex";
-          allTasks.push(task);
         }
       });
   
@@ -93,5 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
       // L'insérer juste après le "Add a task..."
       addTaskDiv.insertAdjacentElement("afterend", container);
+
     });
   });
+
+
