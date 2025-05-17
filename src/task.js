@@ -1,5 +1,7 @@
 //task.js
 import { allTasks } from "./index.js";
+import { displayTasks } from "./today.js";
+import { getCurrentFilter } from "./index.js";
 
 // Create the logic of the task
 export function createTask(name, description, dueDate, priority) {
@@ -107,6 +109,8 @@ export function displayTaskDetails(task) {
       task.toggleCompleted();
       taskElement.setAttribute("data-completed", task.completed);
       checkbox.checked = task.completed;
+
+      displayTasks(getCurrentFilter());
   });
 
   const label = document.createElement("label");
@@ -201,7 +205,7 @@ export function editDueDate(task) {
 
   // Crée l'input date
   const dateInput = document.createElement("input");
-  dateInput.type = "date";
+  dateInput.type = "datetime-local";
   dateInput.value = task.dueDate || "";
   dateInput.classList.add("date-input");
   dateInput.style.marginLeft = "8px";
@@ -212,6 +216,7 @@ export function editDueDate(task) {
   dateInput.addEventListener("change", () => {
     task.dueDate = dateInput.value;
     updateTaskDisplay(task);
+    displayTasks(getCurrentFilter());
   });
 }
 

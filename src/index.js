@@ -10,6 +10,15 @@ import "./styles.css";
 // By default it will be the function home() = Home 
 export const allTasks = [];
 
+let currentFilter = "today";
+export function setCurrentFilter(value) {
+  currentFilter = value;
+}
+export function getCurrentFilter() {
+  return currentFilter;
+}
+
+
 //Navigation bar logic and display
 document.addEventListener("DOMContentLoaded", () => {
   const navButtons = document.querySelectorAll("#nav_top button");
