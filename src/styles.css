@@ -143,17 +143,22 @@ header {
 
 .task, #addtask{
     display: flex;
-    flex-direction: row;
-    gap: 15px;
     align-items: center;
     color: var(--primary-color);
 }
 
 #addtask {
+    gap: 15px;
+    flex-direction: row;
     padding-left: 10px;
 }
 
 .task {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
     border: 1px solid var(--primary-color);
     padding: 10px;
     width : 100%;
@@ -178,13 +183,18 @@ header {
     gap: 10px;
 }
 
-.task {
+.subtask {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px;
+    width: 100%;
+}
 
-  }
+.subtask1 {
+    align-self: self-start;
+    font-size: 0.75rem;
+    color : var(--primary-color);
+}
   
   .task-icons {
     display: flex;
@@ -240,8 +250,6 @@ margin-bottom: 20px;
 .add-task-button, .cancel-task-button {
 width : 50%;
 }
-
-
 
 #nav_top button.active {
 background-color: var(--thirdary-color);

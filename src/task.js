@@ -77,6 +77,16 @@ export function displayTaskDetails(task) {
     taskElement.setAttribute("data-completed", task.completed);
     taskElement.setAttribute("draggable", "true");
 
+    const subtask1 = document.createElement("div");
+    subtask1.classList.add("subtask"); 
+
+    const subtask2 = document.createElement("div");
+    subtask2.classList.add("subtask1");
+
+        // ========== Display the Due Date
+        subtask2.textContent = task.dueDate;
+
+
         // ========== Left side (checkbox + label)
         const taskLeft = document.createElement("div");
         taskLeft.classList.add("task-left");
@@ -130,8 +140,11 @@ export function displayTaskDetails(task) {
         });
     
         // ========== Assemble
-        taskElement.appendChild(taskLeft);
-        taskElement.appendChild(icons);
+        subtask1.appendChild(taskLeft);
+        subtask1.appendChild(icons);
+
+        taskElement.appendChild(subtask1);
+        taskElement.appendChild(subtask2);
     
         const taskContainer = document.querySelector(".taskcontainer");
         taskContainer.appendChild(taskElement);
