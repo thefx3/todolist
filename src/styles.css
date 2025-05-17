@@ -191,12 +191,7 @@ header {
 }
 
 .subtask1 {
-    align-self: self-start;
-    font-size: 0.75rem;
-    color : var(--primary-color);
-}
-
-.subtask2 {
+    padding-left : 5px;
     align-self: self-start;
     font-size: 0.75rem;
     color : var(--primary-color);
