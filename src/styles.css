@@ -195,6 +195,12 @@ header {
     font-size: 0.75rem;
     color : var(--primary-color);
 }
+
+.subtask2 {
+    align-self: self-start;
+    font-size: 0.75rem;
+    color : var(--primary-color);
+}
   
   .task-icons {
     display: flex;
