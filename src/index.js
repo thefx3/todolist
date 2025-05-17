@@ -25,9 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Affichage par défaut
+  // Default display
   displayTasks("today");
   document.querySelector('[data-filter="today"]').classList.add("active");
+
 });
 
 
@@ -95,7 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // L'insérer juste après le "Add a task..."
       addTaskDiv.insertAdjacentElement("afterend", container);
 
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") addBtn.click();
+        if (e.key === "Escape") cancelBtn.click();
+      });
+
     });
   });
-
-

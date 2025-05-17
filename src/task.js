@@ -68,87 +68,116 @@ export function createTask(name, description, dueDate, priority) {
 // Display the task details in the DOM
 export function displayTaskDetails(task) {
 
-    const taskElement = document.createElement("div");
-    taskElement.classList.add("task"); 
-    taskElement.setAttribute("data-name", task.name);
-    taskElement.setAttribute("data-description", task.description);
-    taskElement.setAttribute("data-dueDate", task.dueDate);
-    taskElement.setAttribute("data-priority", task.priority);
-    taskElement.setAttribute("data-completed", task.completed);
-    taskElement.setAttribute("draggable", "true");
+  const taskElement = document.createElement("div");
+  taskElement.classList.add("task"); 
+  taskElement.setAttribute("data-name", task.name);
+  taskElement.setAttribute("data-description", task.description);
+  taskElement.setAttribute("data-dueDate", task.dueDate);
+  taskElement.setAttribute("data-priority", task.priority);
+  taskElement.setAttribute("data-completed", task.completed);
+  taskElement.setAttribute("draggable", "true");
+  taskElement.setAttribute("data-id", task.id);
 
-    const subtask1 = document.createElement("div");
-    subtask1.classList.add("subtask"); 
+  const subtask1 = document.createElement("div");
+  subtask1.classList.add("subtask"); 
 
-    const subtask2 = document.createElement("div");
-    subtask2.classList.add("subtask1");
+  const subtask2 = document.createElement("div");
+  subtask2.classList.add("subtask1");
+  subtask2.setAttribute("dueDate", task.dueDate);
 
-        // ========== Display the Due Date
-        subtask2.textContent = formatDate(task.dueDate);
+  const dueDate = new Date(task.dueDate);
+  const isToday = new Date().toDateString() === dueDate.toDateString();
+  if (isToday) {
+    subtask2.classList.add("subtask-today");
+  }
+
+  // ========== Display the Due Date
+  subtask2.textContent = formatDate(task.dueDate);
 
 
-        // ========== Left side (checkbox + label)
-        const taskLeft = document.createElement("div");
-        taskLeft.classList.add("task-left");
-    
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = task.completed;
+  // ========== Left side (checkbox + label)
+  const taskLeft = document.createElement("div");
+  taskLeft.classList.add("task-left");
 
-        checkbox.addEventListener("change", () => {
-            task.toggleCompleted();
-            taskElement.setAttribute("data-completed", task.completed);
-            checkbox.checked = task.completed;
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = task.completed;
+
+  checkbox.addEventListener("change", () => {
+      task.toggleCompleted();
+      taskElement.setAttribute("data-completed", task.completed);
+      checkbox.checked = task.completed;
+  });
+
+  const label = document.createElement("label");
+  label.textContent = task.name;
+  label.classList.add("task-label");
+
+
+  taskLeft.appendChild(checkbox);
+  taskLeft.appendChild(label);
+
+  // ========== Right side (icons)
+  const icons = document.createElement("div");
+  icons.classList.add("task-icons");
+
+  const iconData = [
+      { class: "edit-date", title: "Edit Date", src: "https://cdn-icons-png.flaticon.com/512/747/747310.png" },
+      { class: "edit-task", title: "Edit Task", src: "https://cdn-icons-png.flaticon.com/512/1827/1827933.png" },
+      { class: "delete-task", title: "Delete Task", src: "https://cdn-icons-png.flaticon.com/512/1214/1214428.png" }
+  ];
+
+  iconData.forEach(({ class: cls, title, src }) => {
+      const span = document.createElement("span");
+      span.classList.add("task-icon", cls);
+      span.title = title;
+
+      const img = document.createElement("img");
+      img.src = src;
+      img.width = 16;
+      img.height = 16;
+
+      span.appendChild(img);
+
+      if (cls === "delete-task") {
+        span.addEventListener("click", () => {
+          deleteTask(task);
         });
-    
-        const label = document.createElement("label");
-        label.textContent = task.name;
-    
-        taskLeft.appendChild(checkbox);
-        taskLeft.appendChild(label);
-    
-        // ========== Right side (icons)
-        const icons = document.createElement("div");
-        icons.classList.add("task-icons");
-    
-        const iconData = [
-            { class: "edit-date", title: "Edit Date", src: "https://cdn-icons-png.flaticon.com/512/747/747310.png" },
-            { class: "edit-task", title: "Edit Task", src: "https://cdn-icons-png.flaticon.com/512/1827/1827933.png" },
-            { class: "delete-task", title: "Delete Task", src: "https://cdn-icons-png.flaticon.com/512/1214/1214428.png" }
-        ];
-    
-        iconData.forEach(({ class: cls, title, src }) => {
-            const span = document.createElement("span");
-            span.classList.add("task-icon", cls);
-            span.title = title;
-    
-            const img = document.createElement("img");
-            img.src = src;
-            img.width = 16;
-            img.height = 16;
-    
-            span.appendChild(img);
+      }
 
-            if (cls === "delete-task") {
-              span.addEventListener("click", () => {
-                // Appel de la fonction de suppression
-                deleteTask(task);
-              });
-            }
-
-            icons.appendChild(span);
+      if (cls === "edit-date") {
+        span.addEventListener("click", () => {
+          editDueDate(task);
         });
-    
-        // ========== Assemble
-        subtask1.appendChild(taskLeft);
-        subtask1.appendChild(icons);
+      }
+      if (cls === "edit-task") {
+        span.addEventListener("click", () => {
+          editTask(task);
+        });
+      }
 
-        taskElement.appendChild(subtask1);
-        taskElement.appendChild(subtask2);
-    
-        const taskContainer = document.querySelector(".taskcontainer");
-        taskContainer.appendChild(taskElement);
+      icons.appendChild(span);
+  });
+
+  // ========== Assemble
+  subtask1.appendChild(taskLeft);
+  subtask1.appendChild(icons);
+
+  taskElement.appendChild(subtask1);
+  taskElement.appendChild(subtask2);
+
+  const taskContainer = document.querySelector(".taskcontainer");
+  taskContainer.appendChild(taskElement);
 }
+
+export function updateTaskDisplay(task) {
+  const taskElement = document.querySelector(`[data-id="${task.id}"]`);
+  if (taskElement) {
+    taskElement.remove();
+  }
+  displayTaskDetails(task);
+}
+
 
 export function deleteTask(task) {
   import("./index.js").then(({ allTasks }) => {
@@ -163,6 +192,82 @@ export function deleteTask(task) {
     }
   });
 }
+
+export function editDueDate(task) {
+  const taskElement = document.querySelector(`[data-id="${task.id}"]`);
+  if (!taskElement) return;
+
+  const dateSpan = taskElement.querySelector(".edit-date");
+
+  // Crée l'input date
+  const dateInput = document.createElement("input");
+  dateInput.type = "date";
+  dateInput.value = task.dueDate || "";
+  dateInput.classList.add("date-input");
+  dateInput.style.marginLeft = "8px";
+
+  dateSpan.replaceWith(dateInput);
+  dateInput.focus();
+
+  dateInput.addEventListener("change", () => {
+    task.dueDate = dateInput.value;
+    updateTaskDisplay(task);
+  });
+}
+
+
+export function editTask(task) {
+  const taskElement = document.querySelector(`[data-id="${task.id}"]`);
+  if (!taskElement) return;
+
+  const labelSpan = taskElement.querySelector(".task-label");
+  const originalLabel = task.name;
+
+  // Crée un input pour modifier le label
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = task.name;
+  input.classList.add("edit-task-input");
+  input.style.marginRight = "8px";
+
+  // Crée boutons valider / annuler
+  const confirmBtn = document.createElement("button");
+  confirmBtn.textContent = "✅";
+  confirmBtn.classList.add("confirm-edit");
+
+  const cancelBtn = document.createElement("button");
+  cancelBtn.textContent = "❌";
+  cancelBtn.classList.add("cancel-edit");
+
+  // Conteneur temporaire
+  const container = document.createElement("span");
+  container.classList.add("edit-task-container");
+  container.appendChild(input);
+  container.appendChild(confirmBtn);
+  container.appendChild(cancelBtn);
+
+  // Remplacement du label par le champ de modification
+  labelSpan.replaceWith(container);
+  input.focus();
+
+  // Valider
+  confirmBtn.addEventListener("click", () => {
+    task.name = input.value.trim() || originalLabel;
+    updateTaskDisplay(task);
+  });
+
+  // Annuler
+  cancelBtn.addEventListener("click", () => {
+    updateTaskDisplay(task);
+  });
+
+  // Enter = valider, Escape = annuler
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") confirmBtn.click();
+    if (e.key === "Escape") cancelBtn.click();
+  });
+}
+
 
 function formatDate(dateString) {
   const date = new Date(dateString);
