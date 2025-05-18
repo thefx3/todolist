@@ -28,12 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   navButtons.forEach(button => {
     button.addEventListener("click", () => {
+
       const filter = button.dataset.filter;
+      setCurrentFilter(filter);
       displayTasks(filter);
 
       // Mise à jour des classes actives
       navButtons.forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
+
+      document.querySelectorAll(".project-button").forEach(btn => btn.classList.remove("active"));
+
     });
   });
 
@@ -78,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (taskText !== "") {
           const task = createTask(taskText, "", null, false);
           allTasks.push(task);
+          task.projectName = getCurrentFilter();
           displayTaskDetails(task);
           container.remove();
           addTaskDiv.style.display = "flex";
@@ -153,11 +159,16 @@ document.addEventListener("DOMContentLoaded", () => {
       cancelBtn.style.padding = "6px";
       cancelBtn.style.display = "none";
   
+      const container2 = document.querySelector(".taskcontainer");
+      container2.innerHTML = `<h2>Untitled Project</h2>`;
+
       // === Ajout logique
       addBtn.addEventListener("click", () => {
+
+
         const projectName = input.value.trim();
         if (projectName === "") return;
-  
+
         // Ajouter le projet à la liste
         projectList.push(projectName);
 

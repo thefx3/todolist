@@ -23,7 +23,7 @@ export function displayProject (project) {
 
     const projectButton = document.createElement("button");
     projectButton.innerText = project.name;
-    projectButton.classList.add("project-button2");
+    projectButton.classList.add("project-button");
     projectButton.dataset.filter = project.name; 
 
 
@@ -38,3 +38,4 @@ export function displayProject (project) {
     const projectTasks = project.tasks;
 
 }
+

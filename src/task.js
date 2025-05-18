@@ -82,6 +82,7 @@ export function displayTaskDetails(task) {
   taskElement.setAttribute("data-dueDate", task.dueDate);
   taskElement.setAttribute("data-priority", task.priority);
   taskElement.setAttribute("data-completed", task.completed);
+  taskElement.setAttribute("data-projectName", getCurrentFilter());
   taskElement.setAttribute("draggable", "true");
   taskElement.setAttribute("data-id", task.id);
 

@@ -113,7 +113,7 @@ header {
     width: calc(100% + 40px);
 
     :active {
-        background-color: blue;
+        background-color: rgb(71, 23, 43);
         color: var(--primary-color);
     }
 }
@@ -258,7 +258,7 @@ margin-bottom: 20px;
 width : 50%;
 }
 
-#nav_top button.active {
+#navigation button.active {
 background-color: var(--thirdary-color);
 color: var(--forth-color);
 }

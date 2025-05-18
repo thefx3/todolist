@@ -4,7 +4,7 @@ import { allTasks, getCurrentFilter, setCurrentFilter } from "./index.js";
 
 
 export function displayTasks(filter = "today") {
-    if (!filter || typeof filter !== "string") filter = "today";
+    if (!filter || typeof filter !== "string") filter = "";
     setCurrentFilter(filter);
     const container = document.querySelector(".taskcontainer");
     container.innerHTML = ""; // Clear previous tasks
@@ -36,7 +36,7 @@ export function displayTasks(filter = "today") {
         });
       } else {
         // Si le filtre correspond à un nom de projet
-        tasksToDisplay = allTasks.filter(task => task.projectName === filter && !task.completed);
+        tasksToDisplay = allTasks.filter(task => task.projectName === getCurrentFilter());
       }
       
 
