@@ -18,21 +18,27 @@ export function displayTasks(filter = "today") {
         return dateA - dateB;
       });
 
-    allTasks.forEach(task => {
-        const taskDate = new Date(task.dueDate);
-
-        if (filter === "today" && taskDate.toDateString() === now.toDateString() && !task.completed) {
+      if (["today", "tomorrow", "all", "planned", "completed"].includes(filter)) {
+        // comportement normal
+        allTasks.forEach(task => {
+          const taskDate = new Date(task.dueDate);
+          if (filter === "today" && taskDate.toDateString() === now.toDateString() && !task.completed) {
             tasksToDisplay.push(task);
-        } else if (filter === "tomorrow" && taskDate.toDateString() === new Date(now.getTime() + 86400000).toDateString()) {
+          } else if (filter === "tomorrow" && taskDate.toDateString() === new Date(now.getTime() + 86400000).toDateString()) {
             tasksToDisplay.push(task);
-        } else if (filter === "all" && task.completed === false) {
+          } else if (filter === "all" && task.completed === false && task.projectName === null) {
             tasksToDisplay.push(task);
-        } else if (filter === "planned" && taskDate > now && task.completed === false) {
+          } else if (filter === "planned" && taskDate > now && task.completed === false) {
             tasksToDisplay.push(task);
-        } else if (filter === "completed" && task.completed) {
+          } else if (filter === "completed" && task.completed) {
             tasksToDisplay.push(task);
-        }
-    });
+          }
+        });
+      } else {
+        // Si le filtre correspond à un nom de projet
+        tasksToDisplay = allTasks.filter(task => task.projectName === filter && !task.completed);
+      }
+      
 
     let count = tasksToDisplay.length;
     if (count === 0) {

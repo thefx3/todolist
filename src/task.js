@@ -11,6 +11,7 @@ export function createTask(name, description, dueDate, priority) {
     let _dueDate = dueDate || null; 
     let _priority = priority;
     let _completed = false;
+    let _projectName = null;
   
     return {
       // === Getters
@@ -31,6 +32,9 @@ export function createTask(name, description, dueDate, priority) {
       },
       get completed() {
         return _completed;
+      },
+      get projectName() {
+        return _projectName;
       },
       isOverdue() {
         if (!_dueDate) return false; // <-- Ne pas considérer comme "en retard"
@@ -59,6 +63,9 @@ export function createTask(name, description, dueDate, priority) {
       },
       toggleCompleted() {
         _completed = !_completed;
+      },
+      set projectName(newProjectName) {
+        _projectName = newProjectName;
       }
     };
   }
@@ -286,10 +293,14 @@ function formatDate(dateString) {
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
 
+  const isYesterday = new Date(new Date().getTime() - 86400000).toDateString() === date.toDateString();
   const isToday = new Date().toDateString() === date.toDateString();
   const isTomorrow = new Date(new Date().getTime() + 86400000).toDateString() === date.toDateString();
 
 
+  if (isYesterday) {
+    return `Yesterday ${hours}:${minutes}`;
+  }
   if (isToday) {
     return `Today ${hours}:${minutes}`;
   }

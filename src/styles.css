@@ -103,7 +103,7 @@ header {
     height: 20px;
 }
 
-#nav_top button {
+#nav_top button, #nav_bottom button {
     font-weight: bold;
     text-align: left;
     appearance: none;

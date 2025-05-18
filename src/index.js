@@ -1,9 +1,11 @@
 //index.js
 // Importing the necessary modules
-import {createTask} from "./task.js";
+import {createTask, updateTaskDisplay} from "./task.js";
 import { displayTaskDetails} from "./task.js";
 import { displayTasks } from "./today.js";
 import "./styles.css";
+import { createProject } from "./projects.js";
+import { displayProject } from "./projects.js";
 
 // Index.js will import all the functions from the other files
 
@@ -22,7 +24,7 @@ export function getCurrentFilter() {
 
 //Navigation bar logic and display
 document.addEventListener("DOMContentLoaded", () => {
-  const navButtons = document.querySelectorAll("#nav_top button");
+  const navButtons = document.querySelectorAll("#navigation button");
 
   navButtons.forEach(button => {
     button.addEventListener("click", () => {
@@ -113,3 +115,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
   });
+
+  //Add Project logic
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const addprojectDiv = document.getElementById("add_project");
+    const container = document.getElementById("nav_bottom");
+    const projectList = [];
+  
+    addprojectDiv.addEventListener("click", () => {
+      // Ne pas dupliquer le champ si déjà ouvert
+      if (document.getElementById("temp-project-box")) return;
+  
+      // === Conteneur temporaire
+      const wrapper = document.createElement("div");
+      wrapper.id = "temp-project-box";
+      wrapper.style.display = "flex";
+      wrapper.style.gap = "8px";
+      wrapper.style.marginTop = "10px";
+  
+      // === Input projet
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Untitled Project";
+      input.style.padding = "6px";
+      input.style.flexGrow = "1";
+  
+      // === Bouton Ajouter
+      const addBtn = document.createElement("button");
+      addBtn.textContent = "Add";
+      addBtn.style.padding = "6px";
+      addBtn.style.display = "none";
+  
+      // === Bouton Annuler
+      const cancelBtn = document.createElement("button");
+      cancelBtn.textContent = "Cancel";
+      cancelBtn.style.padding = "6px";
+      cancelBtn.style.display = "none";
+  
+      // === Ajout logique
+      addBtn.addEventListener("click", () => {
+        const projectName = input.value.trim();
+        if (projectName === "") return;
+  
+        // Ajouter le projet à la liste
+        projectList.push(projectName);
+
+        const project = createProject(projectName);
+        displayProject(project);
+        wrapper.remove();
+        displayTasks(projectName);
+      });
+
+  
+      // === Annulation
+      cancelBtn.addEventListener("click", () => {
+        wrapper.remove();
+      });
+  
+      // === Touche clavier
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") addBtn.click();
+        if (e.key === "Escape") cancelBtn.click();
+      });
+  
+      // Ajout des éléments au wrapper
+      wrapper.appendChild(input);
+      wrapper.appendChild(addBtn);
+      wrapper.appendChild(cancelBtn);
+
+      addprojectDiv.insertAdjacentElement("afterend", wrapper);
+  
+      // Ajout au container
+      container.appendChild(wrapper);
+      input.focus();
+
+    });
+  });
+  
+
+  //Task in every project don't stay
