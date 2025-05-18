@@ -19,6 +19,7 @@ export function getCurrentFilter() {
 }
 
 
+
 //Navigation bar logic and display
 document.addEventListener("DOMContentLoaded", () => {
   const navButtons = document.querySelectorAll("#nav_top button");
@@ -35,8 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Default display
-  displayTasks("today");
-  document.querySelector('[data-filter="today"]').classList.add("active");
+  displayTasks("all");
+  document.querySelector('[data-filter="all"]').classList.add("active");
 
 });
 
@@ -50,8 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (document.getElementById("temp-task-box")) return;
 
       addTaskDiv.style.display = "none";
-  
-      // Créer un conteneur simple
+
       const container = document.createElement("div");
       container.id = "temp-task-box";
       container.style.display = "flex";
@@ -59,13 +59,13 @@ document.addEventListener("DOMContentLoaded", () => {
       container.style.gap = "6px";
       container.style.marginTop = "10px";
 
-      // Champ texte
+      // Input text
       const input = document.createElement("input");
       input.type = "text";
       input.placeholder = "Enter a task...";
       input.style.padding = "6px";
   
-      // Bouton Add
+      // Add
       const addBtn = document.createElement("button");
       addBtn.classList.add("add-task-button");
       addBtn.textContent = "Add";
@@ -74,15 +74,16 @@ document.addEventListener("DOMContentLoaded", () => {
       addBtn.addEventListener("click", () => {
         const taskText = input.value.trim();
         if (taskText !== "") {
-          const task = createTask(taskText, "", new Date().toISOString(), "Low");
+          const task = createTask(taskText, "", null, false);
           allTasks.push(task);
           displayTaskDetails(task);
           container.remove();
           addTaskDiv.style.display = "flex";
+          displayTasks(getCurrentFilter());
         }
       });
   
-      // Bouton Cancel
+      //Cancel
       const cancelBtn = document.createElement("button");
       cancelBtn.classList.add("cancel-task-button");
       cancelBtn.textContent = "Cancel";
@@ -92,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addTaskDiv.style.display = "flex";
       });
   
-      // Ajouter les éléments
+      // Add elements 
       container.appendChild(input);
 
       const containerBtn = document.createElement("button");

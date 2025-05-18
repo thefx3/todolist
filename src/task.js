@@ -8,7 +8,7 @@ export function createTask(name, description, dueDate, priority) {
     const id = Date.now()+ Math.random();
     let _name = name;
     let _description = description;
-    let _dueDate = dueDate;
+    let _dueDate = dueDate || null; 
     let _priority = priority;
     let _completed = false;
   
@@ -33,6 +33,7 @@ export function createTask(name, description, dueDate, priority) {
         return _completed;
       },
       isOverdue() {
+        if (!_dueDate) return false; // <-- Ne pas considérer comme "en retard"
         return new Date(_dueDate) < new Date();
       },
   
@@ -47,9 +48,6 @@ export function createTask(name, description, dueDate, priority) {
         _description = newDescription;
       },
       set dueDate(newDate) {
-        if (isNaN(Date.parse(newDate))) {
-          throw new Error("Date invalid.");
-        }
         _dueDate = newDate;
       },
       set priority(newPriority) {
@@ -87,14 +85,17 @@ export function displayTaskDetails(task) {
   subtask2.classList.add("subtask1");
   subtask2.setAttribute("dueDate", task.dueDate);
 
-  const dueDate = new Date(task.dueDate);
-  const isToday = new Date().toDateString() === dueDate.toDateString();
-  if (isToday) {
-    subtask2.classList.add("subtask-today");
+   // ========== Display the Due Date
+  if (task.dueDate) {
+    const dueDate = new Date(task.dueDate);
+    const isToday = new Date().toDateString() === dueDate.toDateString();
+    if (isToday) {
+      subtask2.classList.add("subtask-today");
+    }
+    subtask2.textContent = formatDate(task.dueDate);
+  } else {
+    subtask2.textContent = "No due date"; // <-- Afficher rien si pas de date
   }
-
-  // ========== Display the Due Date
-  subtask2.textContent = formatDate(task.dueDate);
 
 
   // ========== Left side (checkbox + label)
@@ -117,9 +118,12 @@ export function displayTaskDetails(task) {
   label.textContent = task.name;
   label.classList.add("task-label");
 
+  const subtaskLeft = document.createElement("div");
+  subtaskLeft.classList.add("subtask-left");
+  subtaskLeft.appendChild(checkbox);
+  subtaskLeft.appendChild(label);
 
-  taskLeft.appendChild(checkbox);
-  taskLeft.appendChild(label);
+  taskLeft.appendChild(subtaskLeft);
 
   // ========== Right side (icons)
   const icons = document.createElement("div");
@@ -168,7 +172,7 @@ export function displayTaskDetails(task) {
   subtask1.appendChild(icons);
 
   taskElement.appendChild(subtask1);
-  taskElement.appendChild(subtask2);
+  taskLeft.appendChild(subtask2);
 
   const taskContainer = document.querySelector(".taskcontainer");
   taskContainer.appendChild(taskElement);
@@ -283,11 +287,14 @@ function formatDate(dateString) {
   const minutes = String(date.getMinutes()).padStart(2, "0");
 
   const isToday = new Date().toDateString() === date.toDateString();
+  const isTomorrow = new Date(new Date().getTime() + 86400000).toDateString() === date.toDateString();
 
 
   if (isToday) {
     return `Today ${hours}:${minutes}`;
   }
-
+  if (isTomorrow) {
+    return `Tomorrow ${hours}:${minutes}`;
+  }
   return `${day}-${month}-${year} ${hours}:${minutes}`;
 }

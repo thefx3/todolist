@@ -7,10 +7,16 @@ export function displayTasks(filter = "today") {
     if (!filter || typeof filter !== "string") filter = "today";
     setCurrentFilter(filter);
     const container = document.querySelector(".taskcontainer");
-    container.innerHTML = `<h2>${filter[0].toUpperCase() + filter.slice(1)}</h2>`;
+    container.innerHTML = ""; // Clear previous tasks
 
     const now = new Date();
     let tasksToDisplay = [];
+
+    allTasks.sort((a, b) => {
+        const dateA = new Date(a.dueDate || 0);
+        const dateB = new Date(b.dueDate || 0);
+        return dateA - dateB;
+      });
 
     allTasks.forEach(task => {
         const taskDate = new Date(task.dueDate);
@@ -28,5 +34,14 @@ export function displayTasks(filter = "today") {
         }
     });
 
+    let count = tasksToDisplay.length;
+    if (count === 0) {
+        container.innerHTML = `<h2>${filter[0].toUpperCase() + filter.slice(1)}</h2>`;
+        return;
+    }
+    container.innerHTML = `<h2>${filter[0].toUpperCase() + filter.slice(1) + " " + count}</h2>`;
+
+
     tasksToDisplay.forEach(displayTaskDetails);
+
 }

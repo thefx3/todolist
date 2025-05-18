@@ -164,7 +164,7 @@ header {
     border-radius: 5px;
 }
 
-.task-left {
+.subtask-left {
     display: flex;
     gap: 15px;
     align-items: center;
@@ -204,6 +204,8 @@ header {
   .task-icons {
     display: flex;
     gap: 15px;
+    align-items: center;
+    justify-content: center;
   }
   
   .task-icon {
@@ -275,11 +277,13 @@ color: var(--forth-color);
     color: white;
     margin-right: 10px;
     border: none;
+    height: 30px;
+    width: 30px;
     appearance: none;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 3px;
-    padding: 2px 3px;
+    padding: 0px 3px;
     transition: background-color 0.3s;
 
     &:hover {
