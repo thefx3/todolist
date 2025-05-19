@@ -12,6 +12,7 @@ import { displayProject } from "./projects.js";
 // By default it will be the function home() = Home 
 export const allTasks = [];
 
+
 let currentFilter = "today";
 export function setCurrentFilter(value) {
   currentFilter = value;
@@ -84,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (taskText !== "") {
           const task = createTask(taskText, "", null, false);
           allTasks.push(task);
-          task.projectName = getCurrentFilter();
           displayTaskDetails(task);
           container.remove();
           addTaskDiv.style.display = "flex";
@@ -205,5 +205,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   
-
-  //Task in every project don't stay
