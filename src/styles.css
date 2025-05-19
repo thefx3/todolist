@@ -265,7 +265,7 @@ color: var(--forth-color);
   
 .task[data-completed="true"] {
     .subtask {
-        text-decoration: line-through;
+        
         color: var(--thirdary-color);
     }
     color: var(--thirdary-color);

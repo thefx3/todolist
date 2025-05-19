@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.add("active");
 
       document.querySelectorAll(".project-button").forEach(btn => btn.classList.remove("active"));
+      document.getElementById("add_project").classList.remove("active");
 
     });
   });

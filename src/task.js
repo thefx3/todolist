@@ -205,6 +205,7 @@ export function deleteTask(task) {
     const taskElement = document.querySelector(`.task[data-name="${task.name}"]`);
     if (taskElement) {
       taskElement.remove();
+      displayTasks(getCurrentFilter());
     }
   });
 }
