@@ -11,7 +11,7 @@ export function createTask(name, description, dueDate, priority) {
     let _dueDate = dueDate || null; 
     let _priority = priority;
     let _completed = false;
-    let _projectName = getCurrentFilter();
+    let _projectName = null;
   
     return {
       // === Getters
@@ -311,3 +311,4 @@ function formatDate(dateString) {
   }
   return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
+

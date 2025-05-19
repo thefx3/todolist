@@ -24,8 +24,8 @@ export function displayProject (project) {
     const projectButton = document.createElement("button");
     projectButton.innerText = project.name;
     projectButton.classList.add("project-button");
+    projectButton.classList.add("active");
     projectButton.dataset.filter = project.name; 
-
 
     projectButton.addEventListener("click", () => {
         setCurrentFilter(project.name);
@@ -35,7 +35,5 @@ export function displayProject (project) {
         projectButton.classList.add("active");
     });
     container.appendChild(projectButton);
-    const projectTasks = project.tasks;
-
 }
 

@@ -1,4 +1,5 @@
 //index.js
+
 // Importing the necessary modules
 import {createTask, updateTaskDisplay} from "./task.js";
 import { displayTaskDetails} from "./task.js";
@@ -84,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const taskText = input.value.trim();
         if (taskText !== "") {
           const task = createTask(taskText, "", null, false);
+          task.projectName = getCurrentFilter();
           allTasks.push(task);
           displayTaskDetails(task);
           container.remove();
