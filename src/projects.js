@@ -27,6 +27,34 @@ export function displayProject (project) {
     projectButton.classList.add("active");
     projectButton.dataset.filter = project.name; 
 
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("project-wrapper");
+  
+    const span = document.createElement("span");
+    span.textContent = project.name;
+  
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-project-button");
+    deleteBtn.textContent = "✕";
+    deleteBtn.style.display = "none";
+  
+    projectButton.addEventListener("mouseover", () => {
+      deleteBtn.style.display = "block";
+    });
+    projectButton.addEventListener("mouseout", () => {
+      deleteBtn.style.display = "none";
+    });
+
+    deleteBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      projectButton.remove();
+    });
+    
+    wrapper.appendChild(span);
+    wrapper.appendChild(deleteBtn);
+    projectButton.innerHTML = ""; // reset content
+    projectButton.appendChild(wrapper);
+
     projectButton.addEventListener("click", () => {
         setCurrentFilter(project.name);
         displayTasks(project.name);
