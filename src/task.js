@@ -312,3 +312,39 @@ function formatDate(dateString) {
   return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
 
+
+
+
+export function serializeTask(task) {
+  return {
+    id: task.id,
+    name: task.name,
+    description: task.description,
+    dueDate: task.dueDate,
+    priority: task.priority,
+    completed: task.completed,
+    projectName: task.projectName
+  };
+}
+
+
+export function deserializeTask(data) {
+  const task = createTask(data.name, data.description, data.dueDate, data.priority);
+  task.projectName = data.projectName;
+  if (data.completed) {
+    task.toggleCompleted();
+  }
+  return task;
+}
+
+export function saveTask(task) {
+  const tasks = JSON.parse(localStorage.getItem("allTasks")) || [];
+  tasks.push(serializeTask(task));
+  localStorage.setItem("allTasks", JSON.stringify(tasks));
+}
+
+export function loadTasks() {
+  const data = JSON.parse(localStorage.getItem("allTasks")) || [];
+  return data.map(deserializeTask);
+}
+

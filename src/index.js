@@ -7,7 +7,7 @@ import { displayTasks } from "./today.js";
 import "./styles.css";
 import { createProject } from "./projects.js";
 import { displayProject } from "./projects.js";
-
+import { saveTask, loadTasks, deserializeTask, serializeTask} from "./task.js";
 // Index.js will import all the functions from the other files
 
 // By default it will be the function home() = Home 
@@ -96,6 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             task = createTask(taskText, "", null, false);
           }
+          //save task
+          saveTask(task);
+          updateTaskDisplay(task);
+
           task.projectName = getCurrentFilter();
           allTasks.push(task);
           displayTaskDetails(task);
