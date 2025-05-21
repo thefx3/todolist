@@ -13,6 +13,15 @@ import { saveTask, loadTasks, deserializeTask, serializeTask} from "./task.js";
 // By default it will be the function home() = Home 
 export const allTasks = [];
 
+// function init() {
+//   const tasks = loadTasks();
+//   tasks.forEach(task => {
+//     const deserializedTask = deserializeTask(task);
+//     allTasks.push(deserializedTask);
+//   });
+// }
+// init();
+
 
 let currentFilter = "today";
 export function setCurrentFilter(value) {
@@ -96,9 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             task = createTask(taskText, "", null, false);
           }
-          //save task
-          saveTask(task);
-          updateTaskDisplay(task);
+          // //save task
+          // saveTask(task);
+          // updateTaskDisplay(task);
 
           task.projectName = getCurrentFilter();
           allTasks.push(task);

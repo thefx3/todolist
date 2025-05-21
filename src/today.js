@@ -18,7 +18,6 @@ export function displayTasks(filter = "today") {
         return dateA - dateB;
       });
 
-    const todayStr = now.toDateString();
     const tomorrow = new Date(now);
     tomorrow.setDate(now.getDate() + 1);
     const tomorrowStr= tomorrow.toDateString();
@@ -47,13 +46,13 @@ export function displayTasks(filter = "today") {
     if (filter === "all") {
         tasksToDisplay = allTasks.filter(task => task.completed === false);
     } else if (filter === "today") {
-        tasksToDisplay = allTasks.filter(task => task.dueDate === todayStr && task.completed === false);
+        tasksToDisplay = allTasks.filter(task => task.dueDate === new Date() && task.completed === false );
     } else if (filter === "tomorrow") {
         tasksToDisplay = allTasks.filter(task => new Date(task.dueDate).toDateString() === tomorrowStr && task.completed === false);
     } else if (filter === "all") {
         tasksToDisplay = allTasks.filter(task => task.completed === false && task.projectName === null);
     } else if (filter === "planned") {
-        tasksToDisplay = allTasks.filter(task => task.dueDate > now && task.completed === false);
+        tasksToDisplay = allTasks.filter(task => task.dueDate > now.toISOString() && task.completed === false);
     } else if (filter === "completed") {
         tasksToDisplay = allTasks.filter(task => task.completed);
     } else {

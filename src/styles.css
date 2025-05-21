@@ -40,7 +40,7 @@ header {
     display: flex;
     flex: 1;
     flex-direction: row;
-    overflow: auto; 
+    overflow: auto;
 }
 
 .copyright {
@@ -53,6 +53,10 @@ header {
     align-items: center;
     justify-self: self-end;
     height: 80px;
+}
+
+#addtask {
+    display : flex; 
 }
 
 /* Sidebar */
@@ -139,9 +143,18 @@ header {
 #main {
     padding:30px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
 }
 
-.task, #addtask{
+#main_bottom {
+    height: 100vh;
+}
+
+.task{
     display: flex;
     align-items: center;
     color: var(--primary-color);
