@@ -84,7 +84,18 @@ document.addEventListener("DOMContentLoaded", () => {
       addBtn.addEventListener("click", () => {
         const taskText = input.value.trim();
         if (taskText !== "") {
-          const task = createTask(taskText, "", null, false);
+          let task;
+          if (getCurrentFilter() === "today") {
+            task = createTask(taskText, "", new Date(), false);
+            task.dueDate = new Date().toDateString();
+          } 
+          else if (getCurrentFilter () == "tomorrow") {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            task = createTask(taskText, "", new Date(tomorrow), false);
+          } else {
+            task = createTask(taskText, "", null, false);
+          }
           task.projectName = getCurrentFilter();
           allTasks.push(task);
           displayTaskDetails(task);
