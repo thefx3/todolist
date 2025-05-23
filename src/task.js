@@ -1,5 +1,6 @@
 //task.js
 import { allTasks } from "./index.js";
+import { saveTasks } from "./index.js";
 import { displayTasks } from "./today.js";
 import { getCurrentFilter } from "./index.js";
 
@@ -61,8 +62,8 @@ export function createTask(name, description, dueDate, priority) {
         }
         _priority = newPriority;
       },
-      toggleCompleted() {
-        _completed = !_completed;
+      set completed(value) {
+        _completed = value;
       },
       set projectName(newProjectName) {
         _projectName = newProjectName;
@@ -115,9 +116,10 @@ export function displayTaskDetails(task) {
   checkbox.checked = task.completed;
 
   checkbox.addEventListener("change", () => {
-      task.toggleCompleted();
+      task.completed = !task.completed;
       taskElement.setAttribute("data-completed", task.completed);
       checkbox.checked = task.completed;
+      saveTasks();
 
       displayTasks(getCurrentFilter());
   });
@@ -186,12 +188,20 @@ export function displayTaskDetails(task) {
   taskContainer.appendChild(taskElement);
 }
 
+
+export function addTask(task) {
+  allTasks.push(task);
+  saveTasks();
+}
+
+
 export function updateTaskDisplay(task) {
   const taskElement = document.querySelector(`[data-id="${task.id}"]`);
   if (taskElement) {
     taskElement.remove();
   }
   displayTaskDetails(task);
+  saveTasks();
 }
 
 
@@ -206,6 +216,7 @@ export function deleteTask(task) {
     if (taskElement) {
       taskElement.remove();
       displayTasks(getCurrentFilter());
+      saveTasks();
     }
   });
 }
@@ -230,6 +241,7 @@ export function editDueDate(task) {
     task.dueDate = dateInput.value;
     updateTaskDisplay(task);
     displayTasks(getCurrentFilter());
+    saveTasks();
   });
 }
 
@@ -272,6 +284,7 @@ export function editTask(task) {
   confirmBtn.addEventListener("click", () => {
     task.name = input.value.trim() || originalLabel;
     updateTaskDisplay(task);
+    saveTasks();
   });
 
   // Annuler

@@ -1,6 +1,6 @@
 //projects.js 
 
-import { allTasks } from "./index.js";
+import { allTasks, projectList, saveProjects } from "./index.js";
 import { displayTasks } from "./today.js";
 import { getCurrentFilter } from "./index.js";
 import { createTask } from "./task.js";
@@ -16,6 +16,11 @@ export function createProject (name) {
 
     return { name, tasks };
 
+}
+
+export function addProject(project) {
+  projectList.push(project);
+  saveProjects();
 }
 
 export function displayProject (project) {

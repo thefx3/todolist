@@ -7,20 +7,44 @@ import { displayTasks } from "./today.js";
 import "./styles.css";
 import { createProject } from "./projects.js";
 import { displayProject } from "./projects.js";
-import { saveTask, loadTasks, deserializeTask, serializeTask} from "./task.js";
+import { addTask } from "./task.js";
+import { add } from "date-fns";
+import { addProject } from "./projects.js";
 // Index.js will import all the functions from the other files
 
 // By default it will be the function home() = Home 
-export const allTasks = [];
+export let allTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+export const projectList = JSON.parse(localStorage.getItem("projects")) || [];
 
-// function init() {
-//   const tasks = loadTasks();
-//   tasks.forEach(task => {
-//     const deserializedTask = deserializeTask(task);
-//     allTasks.push(deserializedTask);
-//   });
-// }
-// init();
+export function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(allTasks));
+}
+
+export function saveProjects() {
+  localStorage.setItem("projects", JSON.stringify(projectList));
+}
+
+function loadTasksFromStorage() {
+  const tasksData = JSON.parse(localStorage.getItem('tasks')) || [];
+  return tasksData.map(taskObj => Object.assign(new Task(), taskObj));
+}
+
+function loadProjectsFromStorage() {
+  const projectsData = JSON.parse(localStorage.getItem('projects')) || [];
+  return projectsData.map(proj => ({ ...proj,tasks: proj.tasks.map(task => Object.assign(new Task(), task)),
+  }));
+}
+
+function init () {
+
+ 
+
+    document.querySelectorAll(".project-button").forEach(btn => btn.classList.remove("active"));
+    document.getElementById("add_project").classList.remove("active");
+
+}
+
+init();
 
 
 let currentFilter = "today";
@@ -102,15 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
             task = createTask(taskText, "", new Date(tomorrow), false);
+            task.dueDate = tomorrow.toDateString();
           } else {
             task = createTask(taskText, "", null, false);
           }
-          // //save task
-          // saveTask(task);
-          // updateTaskDisplay(task);
 
           task.projectName = getCurrentFilter();
-          allTasks.push(task);
+          addTask(task);
           displayTaskDetails(task);
           container.remove();
           addTaskDiv.style.display = "flex";
@@ -154,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("DOMContentLoaded", () => {
     const addprojectDiv = document.getElementById("add_project");
     const container = document.getElementById("nav_bottom");
-    const projectList = [];
   
     addprojectDiv.addEventListener("click", () => {
       // Ne pas dupliquer le champ si déjà ouvert
@@ -197,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (projectName === "") return;
 
         // Ajouter le projet à la liste
-        projectList.push(projectName);
+        addProject(projectName);
 
         const project = createProject(projectName);
         displayProject(project);

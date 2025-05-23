@@ -46,9 +46,9 @@ export function displayTasks(filter = "today") {
     if (filter === "all") {
         tasksToDisplay = allTasks.filter(task => task.completed === false);
     } else if (filter === "today") {
-        tasksToDisplay = allTasks.filter(task => task.dueDate === new Date() && task.completed === false );
+        tasksToDisplay = allTasks.filter(task => task.dueDate === now.toDateString() && task.completed === false );
     } else if (filter === "tomorrow") {
-        tasksToDisplay = allTasks.filter(task => new Date(task.dueDate).toDateString() === tomorrowStr && task.completed === false);
+        tasksToDisplay = allTasks.filter(task => task.dueDate === tomorrow.toDateString() && task.completed === false);
     } else if (filter === "all") {
         tasksToDisplay = allTasks.filter(task => task.completed === false && task.projectName === null);
     } else if (filter === "planned") {
