@@ -31,14 +31,18 @@ function loadTasksFromStorage() {
 
 function loadProjectsFromStorage() {
   const projectsData = JSON.parse(localStorage.getItem('projects')) || [];
+  projectsData.forEach(proj => {
+    displayProject(proj);
+  });
   return projectsData.map(proj => ({ ...proj,tasks: proj.tasks.map(task => Object.assign(new Task(), task)),
   }));
+
+
 }
 
 function init () {
 
  
-
     document.querySelectorAll(".project-button").forEach(btn => btn.classList.remove("active"));
     document.getElementById("add_project").classList.remove("active");
 
