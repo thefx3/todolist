@@ -200,6 +200,7 @@ export function updateTaskDisplay(task) {
   if (taskElement) {
     taskElement.remove();
   }
+  
   displayTaskDetails(task);
   saveTasks();
 }

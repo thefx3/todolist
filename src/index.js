@@ -4,7 +4,7 @@
 import {createTask, updateTaskDisplay} from "./task.js";
 import { displayTaskDetails} from "./task.js";
 import { displayTasks } from "./today.js";
-import "./styles.css";
+import "./styles.css"; 
 import { createProject } from "./projects.js";
 import { displayProject } from "./projects.js";
 import { addTask } from "./task.js";

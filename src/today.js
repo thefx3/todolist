@@ -18,6 +18,7 @@ export function displayTasks(filter = "today") {
         return dateA - dateB;
       });
 
+      
     const tomorrow = new Date(now);
     tomorrow.setDate(now.getDate() + 1);
     const tomorrowStr= tomorrow.toDateString();

@@ -15,7 +15,6 @@ export function createProject (name) {
     name = name.trim();
 
     return { name };
-
 }
 
 export function addProject(project) {
