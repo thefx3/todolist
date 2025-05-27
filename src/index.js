@@ -40,8 +40,6 @@ export function deleteProject(projectName) {
     const projectButton = document.querySelector(`.project-button[data-filter="${projectName}"]`);
     if (projectButton) {
       projectButton.remove();
-      setCurrentFilter("all");
-      displayTasks(getCurrentFilter());
     }
   }
   );

@@ -6,6 +6,7 @@ import { getCurrentFilter } from "./index.js";
 import { createTask } from "./task.js";
 import { deleteProject} from "./index.js";
 import { setCurrentFilter } from "./index.js";
+import { set } from "date-fns";
 
 export function createProject (name) {
     if (!name || name.trim() === "") {
@@ -55,6 +56,9 @@ export function displayProject (project) {
       e.stopPropagation();
       projectButton.remove();
       deleteProject(project.name);
+      saveProjects();
+      setCurrentFilter("all");
+      displayTasks(getCurrentFilter());
     });
     
     wrapper.appendChild(span);
