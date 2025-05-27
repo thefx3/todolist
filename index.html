@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO LIST</title>
+<script defer src="/main.js"></script></head>
+
+<body>
+
+    <header>
+            <div id="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828883.png" alt="Logo" width="50px" height="50px">
+            </div>
+            <div id="todo">TO-DO</div>
+    </header>
+
+    <div id="content">
+
+        <div id="navigation">
+            <div id="nav_top">
+                <button data-filter = "today" id="today">
+                    <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Today" width="20" height="20">
+                    Today
+                </button>
+                <button data-filter = "tomorrow" id="tomorrow">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3596/3596209.png" alt="Tomorrow" width="20" height="20">
+                    Tomorrow
+                </button>
+                <button data-filter = "all" id="home">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png" alt="Home" width="20" height="20">
+                    All
+                </button>
+                <button data-filter = "planned" id="planned">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3076/3076220.png" alt="Planned" width="20" height="20">
+                    Planned
+                </button>
+                <button data-filter = "completed" id="completed">
+                    <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Completed" width="20" height="20">
+                    Completed
+                </button>
+            </div>
+
+            <div id="nav_bottom">
+                <div id="projects">PROJECTS</div>
+                <button id="add_project">
+                    <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Completed" width="20" height="20">
+                    Add Project
+                </button>
+                <!-- //Project will be added here -->
+            </div>
+        </div>
+
+        <div id="main">
+            <div id="main_top">
+                <!-- //MORE IMPORTANT DAILY TASKS HERE -->
+            </div>
+
+            <div id="main_bottom">
+                <!-- //Task will be added here -->
+                 <div class = "taskcontainer">
+
+                    <div class = "task">
+                        <div class="task-left">
+                            <input type="checkbox" id="task1" name="task1" value="Task 1">
+                            <label for="task1">Grocieries with my friends</label>
+                        </div>
+
+                          <!-- Icons container -->
+                        <div class="task-icons">
+                            <!-- Date -->
+                            <span class="task-icon edit-date" title="Edit Date">
+                            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Calendar" width="16" height="16">
+                            </span>
+
+                            <!-- Edit -->
+                            <span class="task-icon edit-task" title="Edit Task">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" width="16" height="16">
+                            </span>
+
+                            <!-- Delete -->
+                            <span class="task-icon delete-task" title="Delete Task">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete" width="16" height="16">
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class = "task">
+                        <div class="task-left">
+                            <input type="checkbox" id="task2" name="task2" value="Task 2">
+                            <label for="task2">Dancing class</label>
+                        </div>
+
+                          <!-- Icons container -->
+                        <div class="task-icons">
+                            <!-- Date -->
+                            <span class="task-icon edit-date" title="Edit Date">
+                            <img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Calendar" width="16" height="16">
+                            </span>
+
+                            <!-- Edit -->
+                            <span class="task-icon edit-task" title="Edit Task">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" width="16" height="16">
+                            </span>
+
+                            <!-- Delete -->
+                            <span class="task-icon delete-task" title="Delete Task">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete" width="16" height="16">
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                 <div id="addtask">
+                    <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Completed" width="20" height="20">
+                    <span>Add a task... </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class = "copyright">
+        <div id ="copyright">Copyright © thefx3 - The Odin Project 2025 </div>
+    </div>
+
+</body>
+</html>
