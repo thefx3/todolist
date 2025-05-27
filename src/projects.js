@@ -4,7 +4,7 @@ import { allTasks, projectList, saveProjects } from "./index.js";
 import { displayTasks } from "./today.js";
 import { getCurrentFilter } from "./index.js";
 import { createTask } from "./task.js";
-import { displayTaskDetails } from "./task.js";
+import { deleteProject} from "./index.js";
 import { setCurrentFilter } from "./index.js";
 
 export function createProject (name) {
@@ -12,9 +12,8 @@ export function createProject (name) {
         throw new Error("Project name can't be empty.");
     }
     name = name.trim();
-    let tasks = [];
 
-    return { name, tasks };
+    return { name };
 
 }
 
@@ -22,6 +21,8 @@ export function addProject(project) {
   projectList.push(project);
   saveProjects();
 }
+
+
 
 export function displayProject (project) {
     const container = document.getElementById("nav_bottom");
@@ -53,6 +54,7 @@ export function displayProject (project) {
     deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       projectButton.remove();
+      deleteProject(project.name);
     });
     
     wrapper.appendChild(span);

@@ -24,32 +24,28 @@ export function saveProjects() {
   localStorage.setItem("projects", JSON.stringify(projectList));
 }
 
-function loadTasksFromStorage() {
-  const tasksData = JSON.parse(localStorage.getItem('tasks')) || [];
-  return tasksData.map(taskObj => Object.assign(new Task(), taskObj));
+export function deleteProject(projectName) {
+  import("./index.js").then(({ projectList, saveProjects }) => {
+    const index = projectList.findIndex(p => p.name === projectName);
+    if (index !== -1) {
+      projectList.splice(index, 1);
+      saveProjects();
+    }
+
+    // Remove all tasks associated with this project
+    allTasks = allTasks.filter(task => task.projectName !== projectName);
+    saveTasks();
+    
+    // Remove the project button from the UI
+    const projectButton = document.querySelector(`.project-button[data-filter="${projectName}"]`);
+    if (projectButton) {
+      projectButton.remove();
+      setCurrentFilter("all");
+      displayTasks(getCurrentFilter());
+    }
+  }
+  );
 }
-
-function loadProjectsFromStorage() {
-  const projectsData = JSON.parse(localStorage.getItem('projects')) || [];
-  projectsData.forEach(proj => {
-    displayProject(proj);
-  });
-  return projectsData.map(proj => ({ ...proj,tasks: proj.tasks.map(task => Object.assign(new Task(), task)),
-  }));
-
-
-}
-
-function init () {
-
- 
-    document.querySelectorAll(".project-button").forEach(btn => btn.classList.remove("active"));
-    document.getElementById("add_project").classList.remove("active");
-
-}
-
-init();
-
 
 let currentFilter = "today";
 export function setCurrentFilter(value) {
@@ -221,10 +217,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const projectName = input.value.trim();
         if (projectName === "") return;
 
-        // Ajouter le projet à la liste
-        addProject(projectName);
-
         const project = createProject(projectName);
+
+        // Ajouter le projet à la liste
+        addProject(project);
+
         displayProject(project);
         wrapper.remove();
         displayTasks(projectName);
@@ -255,4 +252,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
   });
+  
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Recharger les projets sauvegardés
+    projectList.forEach(project => {
+      if (typeof project === "string") {
+        displayProject({ name: project });
+      } else if (typeof project === "object" && project.name) {
+        displayProject(project);
+      }
+    });
+    document.querySelectorAll(".project-button").forEach(btn => btn.classList.remove("active"));
+    document.getElementById("add_project").classList.remove("active");
+});
   
