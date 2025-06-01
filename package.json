@@ -1,5 +1,6 @@
 {
-  "name": "mon-projet",
+  "name": "todo-list",
+  "author": "thefx3",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,6 +8,10 @@
     "build": "webpack",
     "dev": "webpack serve",
     "deploy": "git subtree push --prefix dist origin gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thefx3/todolist.git"
   },
   "devDependencies": {
     "css-loader": "^7.1.2",
