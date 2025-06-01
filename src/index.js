@@ -1,5 +1,5 @@
 //index.js
-
+import './styles.css';
 // Importing the necessary modules
 import {createTask, updateTaskDisplay} from "./task.js";
 import { displayTaskDetails} from "./task.js";
